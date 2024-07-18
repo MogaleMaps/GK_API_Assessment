@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "ec09168d-4033-4c18-9b0e-9eb3243c7737",
+		"name": "Spotify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1193256"
+	},
+	"item": [
+		{
+			"name": "AccessToken",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "a6e0c4b730c84b7f9f8c3533c324f611",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "6e9d444cf0944d71beed612d1915d051",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://accounts.spotify.com/api/token",
+					"protocol": "https",
+					"host": [
+						"accounts",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"api",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAlbum",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify Response contains artist: Pitbull\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Pitbull\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Album type should not be empty\", function () {",
+							"    const responseData = pm.response.json();",
+							"",
+							"    pm.expect(responseData).to.have.property('album_type').that.is.not.empty;",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQBJKpvt1pyqpSSstFFQEg4UtkiyaooEUggo96nZB0LZK9Bn_zRGqX4ghJV5BGtHvly6yyq6XylOysbN98X1tKhgeLCAyq-0RWAWYyKupfOLroTtZ08",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"albums",
+						"4aawyAB9vmqN3uQ7FjRGTy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePlayList",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "BQBIXxmFkeSp3IBMkznt_U2BmGvglDz77Fr1O0fr_3Izsyl-2nfpp1vawVW3CUJFWUKiMwbEDD_ZhO3gaB8XTgb8LqAfg4Gv3vqQXAFSfzkz8fXkM08",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Mogale's LoveLand\",\n    \"description\": \"This is for all the lovers in the building\",\n    \"public\": false\n}"
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/users/smedjan/playlists",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"users",
+						"smedjan",
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
